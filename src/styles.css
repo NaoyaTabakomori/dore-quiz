@@ -84,7 +84,7 @@ button {
 .mode-grid {
   width: min(920px, 100%);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: clamp(14px, 3vw, 28px);
 }
 
@@ -122,6 +122,10 @@ button {
 
 .mode-vegetables {
   background: #9bea95;
+}
+
+.mode-cooking {
+  background: #ffb15f;
 }
 
 .mode-emoji {
@@ -342,12 +346,11 @@ button {
 
 @media (max-width: 760px) {
   .mode-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .mode-button {
     min-height: 128px;
-    flex-direction: row;
   }
 
   .choices-grid {
@@ -375,5 +378,13 @@ button {
 
   .choice-fallback {
     font-size: 3.7rem;
+  }
+
+  .mode-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-button {
+    flex-direction: row;
   }
 }

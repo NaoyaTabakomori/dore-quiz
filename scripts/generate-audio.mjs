@@ -40,6 +40,16 @@ const items = [
   ['cabbage', 'キャベツ'],
   ['corn', 'とうもろこし'],
   ['broccoli', 'ブロッコリー'],
+  ['curry-rice', 'カレー'],
+  ['omurice', 'オムライス'],
+  ['hamburg-steak', 'ハンバーグ'],
+  ['spaghetti', 'スパゲッティ'],
+  ['pizza', 'ピザ'],
+  ['onigiri', 'おにぎり'],
+  ['sandwich', 'サンドイッチ'],
+  ['udon', 'うどん'],
+  ['ramen', 'ラーメン'],
+  ['takoyaki', 'たこ焼き'],
 ];
 
 function wavBuffer(samples) {

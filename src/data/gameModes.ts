@@ -62,4 +62,21 @@ export const gameModes: GameMode[] = [
       { id: 'broccoli', label: 'ブロッコリー', emoji: '🥦', imageUrl: imageAsset('vegetables/broccoli.png'), audioUrl: questionAudio('broccoli') },
     ],
   },
+  {
+    id: 'cooking',
+    label: 'お料理',
+    emoji: '🍳',
+    items: [
+      { id: 'curry-rice', label: 'カレー', imageUrl: imageAsset('cooking/curry-rice.jpg'), audioUrl: questionAudio('curry-rice') },
+      { id: 'omurice', label: 'オムライス', imageUrl: imageAsset('cooking/omurice.jpg'), audioUrl: questionAudio('omurice') },
+      { id: 'hamburg-steak', label: 'ハンバーグ', imageUrl: imageAsset('cooking/hamburg-steak.jpg'), audioUrl: questionAudio('hamburg-steak') },
+      { id: 'spaghetti', label: 'スパゲッティ', imageUrl: imageAsset('cooking/spaghetti.jpg'), audioUrl: questionAudio('spaghetti') },
+      { id: 'pizza', label: 'ピザ', imageUrl: imageAsset('cooking/pizza.jpg'), audioUrl: questionAudio('pizza') },
+      { id: 'onigiri', label: 'おにぎり', imageUrl: imageAsset('cooking/onigiri.jpg'), audioUrl: questionAudio('onigiri') },
+      { id: 'sandwich', label: 'サンドイッチ', imageUrl: imageAsset('cooking/sandwich.jpg'), audioUrl: questionAudio('sandwich') },
+      { id: 'udon', label: 'うどん', imageUrl: imageAsset('cooking/udon.jpg'), audioUrl: questionAudio('udon') },
+      { id: 'ramen', label: 'ラーメン', imageUrl: imageAsset('cooking/ramen.jpg'), audioUrl: questionAudio('ramen') },
+      { id: 'takoyaki', label: 'たこ焼き', imageUrl: imageAsset('cooking/takoyaki.jpg'), audioUrl: questionAudio('takoyaki') },
+    ],
+  },
 ];
