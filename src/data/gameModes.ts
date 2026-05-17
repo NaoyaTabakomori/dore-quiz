@@ -6,8 +6,8 @@ const questionAudio = (id: string) => publicAsset(`assets/audio/questions/${id}.
 
 export const AUDIO_PATHS = {
   bgm: publicAsset('assets/audio/bgm.wav'),
-  correct: publicAsset('assets/audio/correct.wav'),
-  wrong: publicAsset('assets/audio/wrong-voice.wav'),
+  correct: publicAsset('assets/audio/correct.m4a'),
+  wrong: publicAsset('assets/audio/wrong.m4a'),
 } as const;
 
 export const gameModes: GameMode[] = [
