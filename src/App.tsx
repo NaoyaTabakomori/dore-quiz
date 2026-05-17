@@ -9,6 +9,8 @@ import type { GameItem, GameMode, Question, ScreenState } from './types/game';
 import { TOTAL_QUESTIONS, createQuestion, getElapsedSeconds } from './utils/game';
 
 const COUNTDOWN_STEPS = ['3', '2', '1', 'スタート！'];
+const QUESTION_AUDIO_DELAY_MS = 250;
+const QUESTION_INPUT_LOCK_MS = 1000;
 
 function App() {
   const [screen, setScreen] = useState<ScreenState>('title');
@@ -21,7 +23,7 @@ function App() {
   const [countdownIndex, setCountdownIndex] = useState(0);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [isAcceptingInput, setIsAcceptingInput] = useState(true);
-  const { isBgmPlaying, startBgm, stopBgm, playCorrect, playWrong, playQuestion } = useAudio(
+  const { isBgmPlaying, unlockAudio, startBgm, stopBgm, playCorrect, playWrong, playQuestion } = useAudio(
     AUDIO_PATHS.bgm,
     AUDIO_PATHS.correct,
     AUDIO_PATHS.wrong,
@@ -30,9 +32,8 @@ function App() {
   const buildQuestion = useCallback((mode: GameMode, previousAnswerId?: string) => {
     const nextQuestion = createQuestion(mode, previousAnswerId);
     setQuestion(nextQuestion);
-    setIsAcceptingInput(true);
-    window.setTimeout(() => playQuestion(nextQuestion.answer.audioUrl), 250);
-  }, [playQuestion]);
+    setIsAcceptingInput(false);
+  }, []);
 
   const startCountdown = useCallback((mode: GameMode) => {
     setSelectedMode(mode);
@@ -45,8 +46,9 @@ function App() {
     setCountdownIndex(0);
     setStartedAt(null);
     setScreen('countdown');
+    unlockAudio();
     void startBgm();
-  }, [startBgm]);
+  }, [startBgm, unlockAudio]);
 
   const startGame = useCallback(() => {
     if (!selectedMode) {
@@ -118,8 +120,8 @@ function App() {
 
     setCorrectCount(nextCorrectCount);
     window.setTimeout(() => {
-      buildQuestion(selectedMode, question.answer.id);
       setFeedback(null);
+      buildQuestion(selectedMode, question.answer.id);
     }, 650);
   }, [buildQuestion, correctCount, isAcceptingInput, playCorrect, playWrong, question, screen, selectedMode, startedAt, stopBgm]);
 
@@ -148,6 +150,27 @@ function App() {
 
     return () => window.clearInterval(timerId);
   }, [screen, startedAt]);
+
+  useEffect(() => {
+    if (screen !== 'playing' || !question) {
+      return undefined;
+    }
+
+    setIsAcceptingInput(false);
+
+    const audioTimerId = window.setTimeout(() => {
+      playQuestion(question.answer.audioUrl);
+    }, QUESTION_AUDIO_DELAY_MS);
+
+    const inputTimerId = window.setTimeout(() => {
+      setIsAcceptingInput(true);
+    }, QUESTION_INPUT_LOCK_MS);
+
+    return () => {
+      window.clearTimeout(audioTimerId);
+      window.clearTimeout(inputTimerId);
+    };
+  }, [playQuestion, question, screen]);
 
   if (screen === 'title') {
     return <TitleScreen modes={gameModes} onSelectMode={startCountdown} />;
