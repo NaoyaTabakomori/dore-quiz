@@ -16,7 +16,7 @@ export function TitleScreen({ modes, onSelectMode }: TitleScreenProps) {
       <div className="mode-grid" aria-label="ゲームモード">
         {modes.map((mode) => (
           <button className={`mode-button mode-${mode.id}`} key={mode.id} type="button" onClick={() => onSelectMode(mode)}>
-            <span className="mode-emoji" aria-hidden="true">{mode.emoji}</span>
+            {mode.emoji && <span className="mode-emoji" aria-hidden="true">{mode.emoji}</span>}
             <span>{mode.label}</span>
           </button>
         ))}
