@@ -25,7 +25,7 @@ body,
 
 body {
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
 }
 
@@ -39,6 +39,7 @@ button {
 
 .screen {
   min-height: 100vh;
+  min-height: 100dvh;
   padding: clamp(18px, 4vw, 44px);
   background:
     radial-gradient(circle at 14% 12%, rgba(255, 225, 90, 0.55), transparent 24rem),
@@ -151,8 +152,9 @@ button {
 
 .game-screen {
   display: grid;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto minmax(0, 1fr);
   gap: clamp(10px, 2vw, 18px);
+  overflow: hidden;
 }
 
 .game-header {
@@ -223,8 +225,11 @@ button {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: clamp(10px, 2vw, 22px);
   align-content: stretch;
+  align-self: stretch;
+  min-height: 0;
 }
 
 .choice-card {
@@ -344,6 +349,119 @@ button {
   }
 }
 
+@media (min-width: 761px) and (max-width: 1180px) {
+  .screen {
+    padding: clamp(24px, 3.2vw, 38px);
+  }
+
+  .title-hero {
+    width: min(760px, 100%);
+    margin-bottom: clamp(24px, 4vh, 38px);
+  }
+
+  .title-hero h1 {
+    font-size: clamp(4.4rem, 8vw, 5.8rem);
+  }
+
+  .mode-grid {
+    width: min(760px, 100%);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(18px, 2.4vw, 28px);
+  }
+
+  .mode-button {
+    min-height: clamp(176px, 19vh, 220px);
+    font-size: clamp(2.2rem, 3.4vw, 2.8rem);
+  }
+
+  .mode-emoji {
+    font-size: clamp(5.6rem, 8vw, 7.2rem);
+  }
+
+  .game-screen {
+    gap: clamp(8px, 1.4vh, 16px);
+  }
+
+  .game-header {
+    gap: 10px;
+  }
+
+  .game-header h1 {
+    font-size: clamp(3rem, 5.8vw, 4.2rem);
+  }
+
+  .game-stats {
+    width: min(920px, 100%);
+  }
+
+  .game-stats span {
+    min-height: 48px;
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+  }
+
+  .feedback-space {
+    min-height: clamp(42px, 5.2vh, 58px);
+  }
+
+  .choices-grid {
+    width: min(960px, 100%);
+    gap: clamp(14px, 2vw, 22px);
+  }
+
+  .choice-card {
+    min-height: clamp(200px, 25vh, 270px);
+    padding: clamp(12px, 1.8vw, 18px);
+  }
+
+  .choice-label {
+    font-size: clamp(1.55rem, 2.4vw, 2rem);
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1180px) and (orientation: landscape) {
+  .screen {
+    padding: clamp(18px, 2.6vw, 32px);
+  }
+
+  .title-hero {
+    margin-bottom: 22px;
+  }
+
+  .title-hero h1 {
+    font-size: clamp(3.8rem, 6vw, 5rem);
+  }
+
+  .mode-grid {
+    width: min(980px, 100%);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .mode-button {
+    min-height: clamp(150px, 24vh, 188px);
+    font-size: clamp(1.8rem, 2.6vw, 2.35rem);
+  }
+
+  .mode-emoji {
+    font-size: clamp(4.4rem, 6vw, 5.8rem);
+  }
+
+  .game-header h1 {
+    font-size: clamp(2.6rem, 4.2vw, 3.6rem);
+  }
+
+  .feedback-space {
+    min-height: 42px;
+  }
+
+  .choices-grid {
+    height: min(570px, calc(100dvh - 250px));
+  }
+
+  .choice-card {
+    min-height: 0;
+  }
+}
+
 @media (max-width: 760px) {
   .mode-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -355,6 +473,7 @@ button {
 
   .choices-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
   }
 
   .game-stats {
