@@ -462,6 +462,68 @@ button {
   }
 }
 
+@media (min-width: 761px) and (orientation: landscape) and (max-height: 900px) {
+  .screen.game-screen {
+    padding: 12px 22px 14px;
+  }
+
+  .game-screen {
+    grid-template-rows: auto 8px minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .game-header {
+    gap: 6px;
+  }
+
+  .game-stats {
+    width: min(1000px, 100%);
+    gap: 8px;
+  }
+
+  .game-stats span {
+    min-height: 34px;
+    padding: 4px 8px;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+  }
+
+  .game-header h1 {
+    font-size: clamp(2.15rem, 4vw, 3.2rem);
+    line-height: 1;
+  }
+
+  .feedback-space {
+    min-height: 8px;
+  }
+
+  .feedback {
+    position: relative;
+    z-index: 2;
+    padding: 4px 18px;
+    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  }
+
+  .choices-grid {
+    width: min(1040px, 100%);
+    height: min(500px, calc(100dvh - 132px));
+    gap: 12px;
+  }
+
+  .choice-card {
+    min-height: 0;
+    gap: 5px;
+    padding: 8px;
+    border-width: 4px;
+    box-shadow: 0 5px 0 rgba(41, 50, 65, 0.12);
+  }
+
+  .choice-label {
+    min-height: 1.15em;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    line-height: 1.1;
+  }
+}
+
 @media (max-width: 760px) {
   .mode-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
