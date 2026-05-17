@@ -4,15 +4,15 @@ const outputRoot = new URL('../public/assets/images/cooking/', import.meta.url);
 
 const images = [
   { id: 'curry-rice', fileName: 'Beef curry rice 003.jpg' },
-  { id: 'omurice', fileName: 'Omurice.jpg' },
-  { id: 'hamburg-steak', fileName: 'Hamburg steak.jpg' },
-  { id: 'spaghetti', fileName: 'Cooked spaghetti.jpg' },
+  { id: 'omurice', fileName: 'Ketchup flavored chicken rice omelette 正統派オムライス.jpg' },
+  { id: 'hamburg-steak', fileName: 'Hamburg steak - 1.jpg' },
+  { id: 'spaghetti', fileName: 'Spaghetti-prepared.jpg' },
   { id: 'pizza', fileName: 'Pizza.jpg' },
   { id: 'onigiri', fileName: 'Onigiri 001.jpg' },
   { id: 'sandwich', fileName: 'Sandwich (1).jpg' },
   { id: 'udon', fileName: 'Udon (Kitsune udon).jpg' },
   { id: 'ramen', fileName: 'Bowl of ramen.jpg' },
-  { id: 'takoyaki', fileName: 'A Takoyaki.jpg' },
+  { id: 'takoyaki', fileName: 'Takoyaki in Osaka.jpg' },
 ];
 
 function commonsFileUrl(fileName) {
@@ -71,7 +71,8 @@ await mkdir(outputRoot, { recursive: true });
 
 for (const image of images) {
   const outputUrl = new URL(`${image.id}.jpg`, outputRoot);
-  if (await exists(outputUrl)) {
+  const shouldReplace = ['omurice', 'hamburg-steak', 'spaghetti', 'takoyaki'].includes(image.id);
+  if (!shouldReplace && await exists(outputUrl)) {
     console.log(`Skipped ${image.id}.jpg`);
     continue;
   }
