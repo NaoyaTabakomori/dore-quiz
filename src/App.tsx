@@ -20,6 +20,7 @@ function App() {
   const [clearSeconds, setClearSeconds] = useState(0);
   const [countdownIndex, setCountdownIndex] = useState(0);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
+  const [isAcceptingInput, setIsAcceptingInput] = useState(true);
   const { isBgmPlaying, startBgm, stopBgm, playCorrect, playWrong, playQuestion } = useAudio(
     AUDIO_PATHS.bgm,
     AUDIO_PATHS.correct,
@@ -29,6 +30,7 @@ function App() {
   const buildQuestion = useCallback((mode: GameMode, previousAnswerId?: string) => {
     const nextQuestion = createQuestion(mode, previousAnswerId);
     setQuestion(nextQuestion);
+    setIsAcceptingInput(true);
     window.setTimeout(() => playQuestion(nextQuestion.answer.audioUrl), 250);
   }, [playQuestion]);
 
@@ -38,6 +40,7 @@ function App() {
     setElapsedSeconds(0);
     setClearSeconds(0);
     setFeedback(null);
+    setIsAcceptingInput(false);
     setQuestion(null);
     setCountdownIndex(0);
     setStartedAt(null);
@@ -53,6 +56,7 @@ function App() {
     setCorrectCount(0);
     setStartedAt(Date.now());
     setElapsedSeconds(0);
+    setIsAcceptingInput(false);
     buildQuestion(selectedMode);
     setScreen('playing');
   }, [buildQuestion, selectedMode]);
@@ -75,17 +79,23 @@ function App() {
     setCorrectCount(0);
     setElapsedSeconds(0);
     setFeedback(null);
+    setIsAcceptingInput(true);
   }, [stopBgm]);
 
   const handleSelectChoice = useCallback((item: GameItem) => {
-    if (!question || !selectedMode || screen !== 'playing') {
+    if (!question || !selectedMode || screen !== 'playing' || !isAcceptingInput) {
       return;
     }
+
+    setIsAcceptingInput(false);
 
     if (item.id !== question.answer.id) {
       setFeedback('wrong');
       playWrong();
-      window.setTimeout(() => setFeedback(null), 900);
+      window.setTimeout(() => {
+        setFeedback(null);
+        setIsAcceptingInput(true);
+      }, 700);
       return;
     }
 
@@ -101,6 +111,7 @@ function App() {
         stopBgm();
         setScreen('cleared');
         setFeedback(null);
+        setIsAcceptingInput(true);
       }, 650);
       return;
     }
@@ -110,7 +121,7 @@ function App() {
       buildQuestion(selectedMode, question.answer.id);
       setFeedback(null);
     }, 650);
-  }, [buildQuestion, correctCount, playCorrect, playWrong, question, screen, selectedMode, startedAt, stopBgm]);
+  }, [buildQuestion, correctCount, isAcceptingInput, playCorrect, playWrong, question, screen, selectedMode, startedAt, stopBgm]);
 
   useEffect(() => {
     if (screen !== 'countdown') {
@@ -153,6 +164,7 @@ function App() {
         correctCount={correctCount}
         elapsedSeconds={elapsedSeconds}
         feedback={feedback}
+        isAcceptingInput={isAcceptingInput}
         isBgmPlaying={isBgmPlaying}
         onSelectChoice={handleSelectChoice}
       />

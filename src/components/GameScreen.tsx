@@ -9,11 +9,12 @@ type GameScreenProps = {
   correctCount: number;
   elapsedSeconds: number;
   feedback: Feedback;
+  isAcceptingInput: boolean;
   isBgmPlaying: boolean;
   onSelectChoice: (item: GameItem) => void;
 };
 
-export function GameScreen({ question, correctCount, elapsedSeconds, feedback, isBgmPlaying, onSelectChoice }: GameScreenProps) {
+export function GameScreen({ question, correctCount, elapsedSeconds, feedback, isAcceptingInput, isBgmPlaying, onSelectChoice }: GameScreenProps) {
   const questionNumber = Math.min(correctCount + 1, TOTAL_QUESTIONS);
 
   return (
@@ -35,7 +36,7 @@ export function GameScreen({ question, correctCount, elapsedSeconds, feedback, i
 
       <section className="choices-grid" aria-label="選択肢">
         {question.choices.map((item) => (
-          <ChoiceCard item={item} key={item.id} onSelect={onSelectChoice} />
+          <ChoiceCard item={item} isDisabled={!isAcceptingInput} key={item.id} onSelect={onSelectChoice} />
         ))}
       </section>
     </main>
